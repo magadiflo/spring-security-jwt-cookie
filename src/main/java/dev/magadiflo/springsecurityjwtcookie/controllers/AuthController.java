@@ -4,8 +4,7 @@ import dev.magadiflo.springsecurityjwtcookie.dtos.AuthRequestDTO;
 import dev.magadiflo.springsecurityjwtcookie.dtos.JwtResponseDTO;
 import dev.magadiflo.springsecurityjwtcookie.utilities.JwtUtility;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/api/v1/auth")
 public class AuthController {
@@ -26,7 +25,7 @@ public class AuthController {
     private final JwtUtility jwtUtility;
     private final AuthenticationManager authenticationManager;
     @Value("${jwt.cookieExpiry}")
-    private int cookieExpiry;
+    private Integer cookieExpiry;
 
     @PostMapping(path = "/login")
     public JwtResponseDTO authenticateAndGetToken(@RequestBody AuthRequestDTO authRequestDTO, HttpServletResponse response) {

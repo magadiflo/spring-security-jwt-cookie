@@ -7,6 +7,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
 
+@Slf4j
 @AllArgsConstructor
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -31,6 +33,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         Optional<String> tokenOptional = Optional.empty();
         if (request.getCookies() != null) {
+            log.info("Leyendo JWT desde cookie HTTPOnly");
             tokenOptional = Arrays.stream(request.getCookies())
                     .filter(cookie -> cookie.getName().equals("accessToken"))
                     .findFirst()

@@ -30,6 +30,16 @@ public class UserController {
         }
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<UserInfo> getUser(@PathVariable Long id) {
+        try {
+            Optional<UserInfo> userResponse = userRepository.findById(id);
+            return ResponseEntity.ok(userResponse.get());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<UserResponse> saveUser(@RequestBody UserRequest userRequest) {
         if (userRequest.getUsername() == null) {
